@@ -2,6 +2,7 @@ import base64
 import hashlib 
 import os
 import pathlib
+import pytz
 import requests
 
 from datetime import datetime
@@ -27,13 +28,15 @@ def new_comment():
         perma = params['perma'].strip()
         if text == '' or perma == '':
             abort(400)
-        date = datetime.now()
+        
+        tz = pytz.timezone(app.config["TZ"])
+        date = tz.localize(datetime.now())
 
         image = get_image_data(params['persona'].strip().lower())
 
         lines = [
             '---',
-            f'date: {date.strftime("%Y-%m-%d %H:%M:%S")}',
+            f'date: {date.isoformat()}',
             f'perma: "{perma}"',
             f'name: "{params["name"].strip()}"',
             f'image: "data:image/png;base64, {image}"',
