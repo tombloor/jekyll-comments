@@ -1,6 +1,8 @@
 # jekyll-comments
 A flask application for generating comments as static files
 
+https://hub.docker.com/r/123f0ur/jekyll-comments
+
 The following environment variables will control the application
 
 ```
@@ -43,3 +45,24 @@ should be placed at `src/.env`
 If the application is being run in a docker environment, you can either pass
 the variables inline with the run command, or define them in a docker compose
 file.
+
+To create a comment, send a post request to `/comment` with the following fields:
+
+- perma = Permalink to the post
+- text = The body of the comment
+- name = The name of the commentor
+- persona = The github username/gravatar email/twitter handle of the commentor (used to grab their profile picture)
+
+The comments can be displayed in your jekyll site in the same way as you would list any other collection. You can use the perma variable to filter the list to only show comments that are related to the current post. eg.
+
+```
+{% assign 
+    my_comments = (site.comments | where:"perma",page.url  | sort: 'date') | reverse 
+%}
+
+{% for comment in my_comments %}
+...
+    Your comment template here
+...
+{% endfor %}
+```
