@@ -13,7 +13,7 @@ lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
 PyGithub==1.45
-PyJWT==1.7.1
+PyJWT==2.4.0
 pylint==2.4.4
 python-dotenv==0.10.5
 pytz==2019.3
